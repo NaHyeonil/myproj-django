@@ -1,5 +1,6 @@
 
 from django.db import models
+from django.core.validators import MinLengthValidator, RegexValidator
 
 
 class TimestampedModel(models.Model):
@@ -11,5 +12,9 @@ class TimestampedModel(models.Model):
 
 
 class Article(TimestampedModel):
-    title = models.CharField(max_length=100, db_index=True)
+    title = models.CharField(max_length=100, db_index=True,
+                             validators=[
+                                 MinLengthValidator(3),
+                                 RegexValidator(r"[ㄱ-힣]", message="한글을 입력해주세요."), ])
     content = models.TextField()
+    photo = models.ImageField(blank=True)
