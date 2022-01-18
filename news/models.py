@@ -1,4 +1,4 @@
-
+from django.conf import settings
 from django.db import models
 from django.core.validators import MinLengthValidator, RegexValidator
 
@@ -18,3 +18,4 @@ class Article(TimestampedModel):
                                  RegexValidator(r"[ㄱ-힣]", message="한글을 입력해주세요."), ])
     content = models.TextField()
     photo = models.ImageField(blank=True)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
